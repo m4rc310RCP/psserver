@@ -32,7 +32,6 @@ public class ServiceTestStartup extends MService{
 		
 		p.setInfo(i);
 		
-		
 		callPublish(p.getStationId(), p);
 		
 		return p;
