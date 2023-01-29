@@ -11,10 +11,13 @@ import io.leangen.graphql.generator.mapping.TypeMapper;
 
 @Configuration
 public class GraphQLConfig {
-	
+
 	@Bean
 	ExtensionProvider<GeneratorConfiguration, TypeMapper> pageableInputField() {
-		return (config, defaults) -> defaults.prepend(new MDateTypeMapper())
-				.prepend(new MCaseTypeMapper());
+		return (config, defaults) -> defaults.prepend(new MDateTypeMapper()).prepend(new MCaseTypeMapper());
 	}
+
+	
+	
+	
 }

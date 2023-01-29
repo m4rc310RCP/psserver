@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class MMultiRegitry<K, V> {
 	private final ConcurrentMap<K, Set<V>> map = new ConcurrentHashMap<>();
-	
+
 	public synchronized void add(K key, V value) {
 		Set<V> set = map.get(key);
 		if (set != null) {
@@ -33,6 +33,20 @@ public class MMultiRegitry<K, V> {
 
 	public boolean contains(K key) {
 		return !get(key).isEmpty();
+	}
+
+	public Set<V> get(Class<?> type) {
+		Set<V> ret = ConcurrentHashMap.newKeySet();
+		
+		final String typeName = type.getSimpleName();
+		map.forEach((k,v)->{
+			String skey = (String) k;
+			if (skey.startsWith(typeName)) {
+				ret.addAll(v);
+			}
+		});
+		
+		return ret == null ? Collections.<V>emptySet() : ret;
 	}
 
 	public Set<V> get(K key) {
