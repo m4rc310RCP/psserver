@@ -27,7 +27,7 @@ public class ServiceTestStartup extends MService{
 	public Panel testPainel() throws Exception {
 		Panel p = new Panel();
 		p.setStationId("M123");
-		p.setUnityId(39);
+		p.setUnityId(39L);
 		
 		Info i = new Info();
 		i.setAlert(true);

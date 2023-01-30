@@ -1,18 +1,18 @@
 package foundation.cmo.graphql.payload;
 
+import foundation.cmo.graphql.services.panel.MPanelConst;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import lombok.Data;
 
 @Data
-public class Panel {
-	@GraphQLQuery(name = "ds_local", description = "Descrição do Local do Painel. Ex. Loja de Peças")
+public class Panel implements MPanelConst {
+	@GraphQLQuery(name = NAME$panel_local, description = DESC$panel_local)
 	private String localName;
-	@GraphQLQuery(name = "cd_estacao", description = "Código do Dispositivo (Estação)")
+	@GraphQLQuery(name = NAME$station_id, description = DESC$station_id)
 	private String stationId;
-	@GraphQLQuery(name = "cd_unidade", description = "Código da Unidade. Ex. 24")
-	private int unityId;
-	
-	@GraphQLQuery(name = "info_chamada", description = "Informações sobre a chamada ao painel.")	
+	@GraphQLQuery(name = NAME$unity_id, description = DESC$unity_id)
+	private Long unityId;
+	@GraphQLQuery(name = NAME$info, description = DESC$info)	
 	private Info info;
 	
 }

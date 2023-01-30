@@ -3,10 +3,8 @@ package foundation.cmo;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -57,19 +55,20 @@ public class App {
 				}
 			}
 		});
-		
-		
-//		mutation.dish.desc
-        
-        System.setProperty("mutation.dish.desc", "0oooo");
-        
-		
-
 		return m;
 	}
 
+	@Bean
+	MessageBundle messageBundle() {
+		return key -> getString(key);
+	}
+
 	public String getString(String code, Object... args) {
-		return messageSource().getMessage(code, args, Locale.forLanguageTag("pt-BR"));
+		try {
+			return messageSource().getMessage(code, args, Locale.forLanguageTag("pt-BR"));
+		} catch (Exception e) {
+			return code;
+		}
 	}
 
 	@Bean
@@ -87,5 +86,4 @@ public class App {
 		return messageSource;
 	}
 
-	
 }

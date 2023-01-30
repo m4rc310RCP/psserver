@@ -1,6 +1,8 @@
 package foundation.cmo.graphql.utils;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -35,18 +37,18 @@ public class MMultiRegitry<K, V> {
 		return !get(key).isEmpty();
 	}
 
-	public Set<V> get(Class<?> type) {
-		Set<V> ret = ConcurrentHashMap.newKeySet();
+	public List<K> getKeys(Class<?> type) {
+		List<K> ret = new  ArrayList<>();
 		
 		final String typeName = type.getSimpleName();
 		map.forEach((k,v)->{
 			String skey = (String) k;
 			if (skey.startsWith(typeName)) {
-				ret.addAll(v);
+				ret.add(k);
 			}
 		});
 		
-		return ret == null ? Collections.<V>emptySet() : ret;
+		return ret == null ? Collections.<K>emptyList() : ret;
 	}
 
 	public Set<V> get(K key) {
