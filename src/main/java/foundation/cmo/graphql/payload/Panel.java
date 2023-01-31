@@ -1,11 +1,16 @@
 package foundation.cmo.graphql.payload;
 
+import java.io.Serializable;
+
 import foundation.cmo.graphql.services.panel.MPanelConst;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import lombok.Data;
 
 @Data
-public class Panel implements MPanelConst {
+public class Panel implements MPanelConst , Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	@GraphQLQuery(name = NAME$panel_local, description = DESC$panel_local)
 	private String localName;
 	@GraphQLQuery(name = NAME$station_id, description = DESC$station_id)

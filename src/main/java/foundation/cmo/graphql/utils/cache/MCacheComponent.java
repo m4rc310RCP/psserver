@@ -3,20 +3,20 @@ package foundation.cmo.graphql.utils.cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import foundation.cmo.graphql.payload.Panel;
 import foundation.cmo.graphql.services.panel.MPanelConst;
-import foundation.cmo.utils.i18n.M;
 
 @Component
 public class MCacheComponent implements MPanelConst{
 	private static final Logger LOG = LoggerFactory.getLogger(MCacheComponent.class);
 	
-	@Autowired
-	private M m;
+	@Autowired CacheManager cacheManager;
 	
 //	private static final DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 //	@Cacheable(value = CACHE_ID$panels, key = "#stationId")
@@ -42,19 +42,26 @@ public class MCacheComponent implements MPanelConst{
 //		log.info(String.format("%s - Limpando o cache para todos os paineis.", df.format(new Date())));
 //	}
 	
-	@Cacheable(value = CACHE_ID$panels)
+	@Cacheable(value = CACHE_ID$panels, key = "#stationId")
 	public Panel getFromCache(String stationId) {
+		
+		LOG.info("Retorn from default value");
+		
 		Panel panel = new Panel();
 		panel.setStationId(stationId);
-		panel.setPass("0");
-		
+		panel.setPass("-");
 		return panel;
 	}
 	
-	@Cacheable(value = CACHE_ID$panels)
-	public Panel updateCache(Panel panel) {
+	@CachePut(value = CACHE_ID$panels, key = "#stationId")
+	public Panel updateCache(String stationId, Panel panel) {
 		LOG.info("Update cache...");
-		return panel;
+		Panel p = new Panel();
+		p.setLocalName(panel.getLocalName());
+		p.setStationId(stationId);
+		p.setPass(panel.getPass());
+		p.setUnityId(panel.getUnityId());
+		return p;
 	}
 	
 	@CacheEvict(value = CACHE_ID$panels, allEntries = true)

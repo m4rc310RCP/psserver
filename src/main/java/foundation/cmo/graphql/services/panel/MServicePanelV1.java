@@ -4,6 +4,8 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -28,9 +30,11 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 	@Autowired
 	MCacheComponent cache;
 	
+	
+	
 	@Autowired M m;
 
-	@Cacheable(value = CACHE_ID$panels)
+//	@Cacheable(value = CACHE_ID$panels)
 	@GraphQLQuery(name = QUERY$panel_default, description = DESC_QUERY$panel_default)
 	public Panel getDefaultPanel(
 			@GraphQLArgument(name = NAME$station_id, description = DESC$station_id) String stationId) {
@@ -40,6 +44,8 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 		Panel panel = new Panel();
 		panel.setPass("---");
 		panel.setStationId(stationId);
+		
+		
 
 		return panel;
 	}
@@ -48,8 +54,10 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 	public  Publisher<Panel> registerPanel(
 			@GraphQLArgument(name = NAME$station_id, description = DESC$station_id) String stationId) {
 		
-		Panel panelDefault = cache.getFromCache(stationId);
-		return publish(Panel.class, stationId, panelDefault);
+		Panel fromCache = cache.getFromCache(stationId);
+		
+		
+		return publish(Panel.class, stationId, fromCache);
 	}
 
 	@GraphQLMutation(name = MUTATION$call_pass, description = DESC_MUTATION$call_pass)
@@ -68,8 +76,10 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 		panel.setPass(pass);
 		
 		try {
-			cache.updateCache(panel);
+			
 			callPublish(stationId, panel);
+			
+			cache.updateCache(panel.getStationId(), panel);
 			
 			return Status.to(m.getString(MESSAGE$call_pass_sucess), 0);
 		} catch (Exception e) {
@@ -78,7 +88,7 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 	}
 	
 	
-	@Scheduled(cron = "0 28 22 ? * *")
+	@Scheduled(cron = "0 39 19 ? * *")
 	public void scheduleCleaCache() {
 		cache.resetPanelCache();
 	}
