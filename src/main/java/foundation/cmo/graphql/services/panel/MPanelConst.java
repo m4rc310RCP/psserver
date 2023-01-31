@@ -4,6 +4,7 @@ public interface MPanelConst {
 	
 //==================================================//
 	public static final String MESSAGE$_sucess = "message.sucess";	
+	public static final String MESSAGE$call_pass_sucess = "text.call_pass_sucess";	
 	public static final String MESSAGE$no_connected_panel = "error.no.connected.panel";	
 //==================================================//
 	public static final String CACHE_ID$panels = "cache_panels";

@@ -71,7 +71,7 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 			cache.updateCache(panel);
 			callPublish(stationId, panel);
 			
-			return Status.to(m.getString(MESSAGE$_sucess), 0);
+			return Status.to(m.getString(MESSAGE$call_pass_sucess), 0);
 		} catch (Exception e) {
 			return Status.to(e.getMessage(), -99);
 		}
