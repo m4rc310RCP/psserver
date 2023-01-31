@@ -59,12 +59,15 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 			@GraphQLArgument(name = NAME$info_pass, description = DESC$info_pass)
 			String pass) {
 		
+		if (!inPublish(Panel.class, stationId)) {
+			return Status.to(m.getString(MESSAGE$no_connected_panel, stationId), -99);
+		}
+		
 		Panel panel = new Panel();
 		panel.setStationId(stationId);
 		panel.setPass(pass);
 		
 		try {
-			
 			cache.updateCache(panel);
 			callPublish(stationId, panel);
 			
