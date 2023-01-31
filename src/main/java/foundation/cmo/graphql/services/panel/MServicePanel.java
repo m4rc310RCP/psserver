@@ -7,7 +7,6 @@ import java.util.List;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 
 import foundation.cmo.graphql.payload.Panel;
 import foundation.cmo.graphql.payload.Status;
@@ -18,10 +17,9 @@ import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.annotations.GraphQLSubscription;
-import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 
-@Service
-@GraphQLApi
+//@Service
+//@GraphQLApi
 public class MServicePanel extends MService implements MPanelConst {
 
 	@Autowired
@@ -40,8 +38,8 @@ public class MServicePanel extends MService implements MPanelConst {
 		List<Panel> list = new ArrayList<>();
 		
 		registry.getKeys(Panel.class).forEach(key->{
-			String stationId = key.replace("Panel-", "").trim();
-			list.add(cache.getPanelDefault(stationId));
+//			String stationId = key.replace("Panel-", "").trim();
+//			list.add(cache.getPanelDefault(stationId));
 		});
 		
 		return list;
@@ -87,8 +85,9 @@ public class MServicePanel extends MService implements MPanelConst {
 	
 	@GraphQLSubscription(name = SUBSCRIPTION$listerner_panel)
 	public Publisher<Panel> conectPanel(@GraphQLArgument(name = ARG$station_id, description = DESC$station_id) String stationId) {
-		Panel panel = cache.getPanelDefault(stationId);
-		return publish(Panel.class, stationId, panel);
+//		Panel panel = cache.getPanelDefault(stationId);
+//		return publish(Panel.class, stationId, panel);
+		return null;
 	}
 	
 	@GraphQLSubscription(name = SUBSCRIPTION$connected_panels)

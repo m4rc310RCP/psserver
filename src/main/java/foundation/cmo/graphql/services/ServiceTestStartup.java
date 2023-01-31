@@ -3,13 +3,11 @@ package foundation.cmo.graphql.services;
 import java.util.Date;
 
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import foundation.cmo.graphql.payload.Info;
 import foundation.cmo.graphql.payload.Panel;
-import foundation.cmo.graphql.utils.cache.MCacheComponent;
 import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
@@ -19,8 +17,8 @@ import io.leangen.graphql.annotations.GraphQLSubscription;
 //@GraphQLApi
 public class ServiceTestStartup extends MService{
 	
-	@Autowired
-	private MCacheComponent mcache;
+//	@Autowired
+//	private MCacheComponent mcache;
 	
 	
 	@GraphQLQuery(name = "teste_painel")
@@ -35,7 +33,7 @@ public class ServiceTestStartup extends MService{
 		i.setPass("12");
 		i.setCallMoment(new Date());
 		
-		p.setInfo(i);
+//		p.setInfo(i);
 		
 		callPublish(p.getStationId(), p);
 		
@@ -56,7 +54,7 @@ public class ServiceTestStartup extends MService{
 	
 	@Scheduled(cron = "0 37 11 * * ?")
 	public void resetCache() {
-		mcache.resetPanelsCache();
+//		mcache.resetPanelsCache();
 	}
 	
 	@GraphQLMutation
@@ -75,9 +73,10 @@ public class ServiceTestStartup extends MService{
 	
 	@GraphQLQuery
 	public Panel getDefaultPanel(String panelName) {
-		Panel p = mcache.getPanelDefault(panelName);
-		
-		return p;
+//		Panel p = mcache.getPanelDefault(panelName);
+//		
+//		return p;
+		return null;
 	}
 	
 }

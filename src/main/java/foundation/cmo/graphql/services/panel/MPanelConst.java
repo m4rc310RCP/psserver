@@ -13,11 +13,18 @@ public interface MPanelConst {
 	
 	public static final String PANEL = "painel";
 //==================================================//
+	public static final String QUERY$panel_default 		= "${query.panel.default}";
+	public static final String DESC_QUERY$panel_default = "${desc.query.panel.default}";
+	
+	
 	public static final String QUERY$status_server = "STATUS_SERVIDOR";
+	
 	public static final String QUERY$connected_panels = "PAINEIS_ATIVOS";
 //==================================================//
 //==================================================//
-	public static final String SUBSCRIPTION$listerner_panel  = "CONECTAR_PAINEL";
+	public static final String SUBSCRIPTION$listerner_panel  = "${subscription.listern.panel}";
+	public static final String DESC_SUBSCRIPTION$listerner_panel  = "${desc.subscription.listern.panel}";
+	
 	public static final String SUBSCRIPTION$connected_panels = "PAINEIS_CONECTADOS";
 //==================================================//
 	public static final String MUTATION$call_pass 	   = "${mutation.call.pass}";
