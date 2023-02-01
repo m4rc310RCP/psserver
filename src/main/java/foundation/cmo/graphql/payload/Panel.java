@@ -19,4 +19,6 @@ public class Panel implements MPanelConst , Serializable{
 	private String pass;
 	@GraphQLQuery(name = NAME$unity_id, description = DESC$unity_id)
 	private Long unityId;
+	@GraphQLQuery(name = NAME$user_alias, description = DESC$user_alias)
+	private String userAlias;
 }

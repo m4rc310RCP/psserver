@@ -46,6 +46,9 @@ public interface MPanelConst {
 	public static final String NAME$panel		 ="${name.panel}";
 	public static final String DESC$panel		 ="${desc.panel}";
 	
+	public static final String NAME$user_alias  = "${name.user.alias}";
+	public static final String DESC$user_alias  = "${desc.user.alias}";
+	
 	public static final String NAME$info		 ="${name.info}";
 	public static final String DESC$info		 ="${desc.info}";
 	
