@@ -58,12 +58,12 @@ public class MCacheComponent implements MPanelConst{
 	@CachePut(value = CACHE_ID$panels, key = "#stationId")
 	public Panel updateCache(String stationId, Panel panel) {
 		LOG.info("Update cache...");
-		Panel p = new Panel();
-		p.setLocalName(panel.getLocalName());
-		p.setStationId(stationId);
-		p.setPass(panel.getPass());
-		p.setUnityId(panel.getUnityId());
-		return p;
+//		Panel p = new Panel();
+//		p.setLocalName(panel.getLocalName());
+//		p.setStationId(stationId);
+//		p.setPass(panel.getPass());
+//		p.setUnityId(panel.getUnityId());
+		return panel;
 	}
 	
 	@CacheEvict(value = CACHE_ID$panels, allEntries = true)

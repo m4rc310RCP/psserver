@@ -59,8 +59,8 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 			@GraphQLArgument(name = NAME$panel, description = DESC$panel) Panel panel) {
 		
 		try {
-			cache.updateCache(panel.getStationId(), panel);
 			callPublish(panel.getStationId(), panel);
+			cache.updateCache(panel.getStationId(), panel);
 			
 			return Status.to(m.getString(MESSAGE$call_pass_sucess), 0);
 		} catch (Exception e) {
