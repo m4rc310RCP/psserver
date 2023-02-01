@@ -26,10 +26,9 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 
 	@Autowired
 	MCacheComponent cache;
-	
-	
-	
-	@Autowired M m;
+
+	@Autowired
+	M m;
 
 //	@Cacheable(value = CACHE_ID$panels)
 	@GraphQLQuery(name = QUERY$panel_default, description = DESC_QUERY$panel_default)
@@ -41,42 +40,26 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 		Panel panel = new Panel();
 		panel.setPass("---");
 		panel.setStationId(stationId);
-		
-		
-		
 
 		return panel;
 	}
 
 	@GraphQLSubscription(name = SUBSCRIPTION$listerner_panel, description = DESC_SUBSCRIPTION$listerner_panel)
-	public  Publisher<Panel> registerPanel(
+	public Publisher<Panel> registerPanel(
 			@GraphQLArgument(name = NAME$station_id, description = DESC$station_id) String stationId) {
-		
+
 		Panel fromCache = cache.getFromCache(stationId);
-		
-		
+
 		return publish(Panel.class, stationId, fromCache);
 	}
 
 	@GraphQLMutation(name = MUTATION$call_pass, description = DESC_MUTATION$call_pass)
-	public Status callPass(
-			@GraphQLArgument(name = NAME$station_id, 
-			description = DESC$station_id) String stationId, 
-			@GraphQLArgument(name = NAME$info_pass, description = DESC$info_pass)
-			String pass) {
-		
-		if (!inPublish(Panel.class, stationId)) {
-			return Status.to(m.getString(MESSAGE$no_connected_panel, stationId), -99);
-		}
-		
-		Panel panel = new Panel();
-		panel.setStationId(stationId);
-		panel.setPass(pass);
+	public Status callPassV1(
+			@GraphQLArgument(name = NAME$panel, description = DESC$panel) Panel panel) {
 		
 		try {
-			
-			callPublish(stationId, panel);
-			
+			callPublish(panel.getStationId(), panel);
+
 			cache.updateCache(panel.getStationId(), panel);
 			
 			return Status.to(m.getString(MESSAGE$call_pass_sucess), 0);
@@ -84,8 +67,30 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 			return Status.to(e.getMessage(), -99);
 		}
 	}
-	
-	
+
+	public Status callPass(@GraphQLArgument(name = NAME$station_id, description = DESC$station_id) String stationId,
+			@GraphQLArgument(name = NAME$info_pass, description = DESC$info_pass) String pass) {
+
+		if (!inPublish(Panel.class, stationId)) {
+			return Status.to(m.getString(MESSAGE$no_connected_panel, stationId), -99);
+		}
+
+		Panel panel = new Panel();
+		panel.setStationId(stationId);
+		panel.setPass(pass);
+
+		try {
+
+			callPublish(stationId, panel);
+
+			cache.updateCache(panel.getStationId(), panel);
+
+			return Status.to(m.getString(MESSAGE$call_pass_sucess), 0);
+		} catch (Exception e) {
+			return Status.to(e.getMessage(), -99);
+		}
+	}
+
 	@Scheduled(cron = "0 39 19 ? * *")
 	public void scheduleCleaCache() {
 		cache.resetPanelCache();
