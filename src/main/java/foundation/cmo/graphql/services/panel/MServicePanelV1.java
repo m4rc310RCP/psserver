@@ -31,7 +31,7 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 	M m;
 
 //	@Cacheable(value = CACHE_ID$panels)
-	@GraphQLQuery(name = QUERY$panel_default, description = DESC_QUERY$panel_default)
+	@GraphQLQuery(name = QUERY$panel_default, description = DESC_QUERY$panel_default, deprecationReason = "No used.")
 	public Panel getDefaultPanel(
 			@GraphQLArgument(name = NAME$station_id, description = DESC$station_id) String stationId) {
 
@@ -40,6 +40,7 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 		Panel panel = new Panel();
 		panel.setPass("---");
 		panel.setStationId(stationId);
+		
 
 		return panel;
 	}
@@ -58,9 +59,8 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 			@GraphQLArgument(name = NAME$panel, description = DESC$panel) Panel panel) {
 		
 		try {
-			callPublish(panel.getStationId(), panel);
-
 			cache.updateCache(panel.getStationId(), panel);
+			callPublish(panel.getStationId(), panel);
 			
 			return Status.to(m.getString(MESSAGE$call_pass_sucess), 0);
 		} catch (Exception e) {

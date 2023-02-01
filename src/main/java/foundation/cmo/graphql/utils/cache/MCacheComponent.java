@@ -51,6 +51,7 @@ public class MCacheComponent implements MPanelConst{
 		panel.setStationId(stationId);
 		panel.setPass("-");
 		panel.setLocalName("Loja de Peças");
+		panel.setUserAlias(" ");
 		return panel;
 	}
 	
