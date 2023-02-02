@@ -4,15 +4,18 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import foundation.cmo.graphql.payload.Panel;
 import foundation.cmo.graphql.payload.Status;
+import foundation.cmo.graphql.payload.Totem;
 import foundation.cmo.graphql.services.MService;
 import foundation.cmo.graphql.utils.cache.MCacheComponent;
 import foundation.cmo.utils.i18n.M;
 import io.leangen.graphql.annotations.GraphQLArgument;
+import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.annotations.GraphQLSubscription;
@@ -44,7 +47,32 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 
 		return panel;
 	}
+	
+	
 
+	@GraphQLSubscription(name = SUBSCRIPTION$totem_load, description = DESC_SUBSCRIPTION$totem_load)
+	public Publisher<Totem> loadTotem(
+			@GraphQLArgument(name = NAME$station_id, description = DESC$station_id)
+			String stationId){
+		
+		Totem totemFromCache = cache.getTotem(stationId);
+		return publish(Totem.class, stationId, totemFromCache);
+	}
+	
+//	@Cacheable(value = CACHE_ID$totems, key = "#title")
+	@GraphQLQuery(name = NAME$title, description = DESC$title)
+	public String titleFrom(@GraphQLContext Totem totem) {
+		return "Olá, seja bem vindo. Escolha uma opção para continuar.";
+	}
+	
+//	@Cacheable(value = CACHE_ID$totems, key = "#unityId")
+	@GraphQLQuery(name = NAME$unity_id, description = DESC$unity_id)
+	public Long unityFrom(@GraphQLContext Totem totem) {
+		return 39L;
+	}
+	
+//	======================================================================
+	
 	@GraphQLSubscription(name = SUBSCRIPTION$listerner_panel, description = DESC_SUBSCRIPTION$listerner_panel)
 	public Publisher<Panel> registerPanel(
 			@GraphQLArgument(name = NAME$station_id, description = DESC$station_id) String stationId) {

@@ -8,6 +8,7 @@ public interface MPanelConst {
 	public static final String MESSAGE$no_connected_panel = "error.no.connected.panel";	
 //==================================================//
 	public static final String CACHE_ID$panels = "cache_panels";
+	public static final String CACHE_ID$totems = "cache_totems";
 //==================================================//
 	public static final String ARG$unit_id = "cd_unidade";
 	public static final String ARG$station_id = "cd_estacao";
@@ -25,6 +26,9 @@ public interface MPanelConst {
 //==================================================//
 	public static final String SUBSCRIPTION$listerner_panel  = "${subscription.listern.panel}";
 	public static final String DESC_SUBSCRIPTION$listerner_panel  = "${desc.subscription.listern.panel}";
+	
+	public static final String SUBSCRIPTION$totem_load  = "${subscription.totem.load}";
+	public static final String DESC_SUBSCRIPTION$totem_load  = "${desc.subscription.totem.load}";
 	
 	public static final String SUBSCRIPTION$connected_panels = "PAINEIS_CONECTADOS";
 //==================================================//
@@ -51,6 +55,9 @@ public interface MPanelConst {
 	
 	public static final String NAME$info		 ="${name.info}";
 	public static final String DESC$info		 ="${desc.info}";
+	
+	public static final String NAME$title		 ="${name.title}";
+	public static final String DESC$title		 ="${desc.title}";
 	
 	public static final String NAME$status		 ="${name.status}";
 	public static final String DESC$status		 ="${desc.status}";
