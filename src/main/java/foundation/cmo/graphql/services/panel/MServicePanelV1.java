@@ -4,7 +4,6 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +46,6 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 
 		return panel;
 	}
-	
-	
 
 	@GraphQLSubscription(name = SUBSCRIPTION$totem_load, description = DESC_SUBSCRIPTION$totem_load)
 	public Publisher<Totem> loadTotem(
@@ -87,8 +84,15 @@ public class MServicePanelV1 extends MService implements MPanelConst {
 			@GraphQLArgument(name = NAME$panel, description = DESC$panel) Panel panel) {
 		
 		try {
-			callPublish(panel.getStationId(), panel);
-			cache.updateCache(panel.getStationId(), panel);
+			
+			String stationId = panel.getStationId();
+			
+			if (!inPublish(Panel.class, stationId)) {
+				return Status.to(m.getString(MESSAGE$no_connected_panel, stationId), -99);
+			}
+			
+			callPublish(stationId, panel);
+			cache.updateCache(stationId, panel);
 			
 			return Status.to(m.getString(MESSAGE$call_pass_sucess), 0);
 		} catch (Exception e) {

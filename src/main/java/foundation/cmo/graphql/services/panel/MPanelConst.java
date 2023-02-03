@@ -50,6 +50,9 @@ public interface MPanelConst {
 	public static final String NAME$panel		 ="${name.panel}";
 	public static final String DESC$panel		 ="${desc.panel}";
 	
+	public static final String NAME$queue		 ="${name.queue}";
+	public static final String DESC$queue		 ="${desc.queue}";
+	
 	public static final String NAME$user_alias  = "${name.user.alias}";
 	public static final String DESC$user_alias  = "${desc.user.alias}";
 	
