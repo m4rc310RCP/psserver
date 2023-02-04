@@ -16,7 +16,6 @@ public class GraphQLConfig {
 	ExtensionProvider<GeneratorConfiguration, TypeMapper> pageableInputField() {
 		return (config, defaults) -> defaults.prepend(new MDateTypeMapper()).prepend(new MCaseTypeMapper());
 	}
-
 	
 	
 	

@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import foundation.cmo.graphql.payload.Panel;
 import foundation.cmo.graphql.payload.Status;
@@ -18,10 +17,9 @@ import io.leangen.graphql.annotations.GraphQLContext;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.annotations.GraphQLSubscription;
-import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 
-@Service
-@GraphQLApi
+//@Service
+//@GraphQLApi
 public class MServicePanelV1 extends MService implements MPanelConst {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MServicePanelV1.class);
