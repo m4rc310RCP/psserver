@@ -14,8 +14,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import foundation.cmo.graphql.payload.Coordinate;
+import foundation.cmo.graphql.payload.Status;
 import foundation.cmo.graphql.payload.Totem;
 import foundation.cmo.graphql.services.MService;
+import io.leangen.graphql.annotations.GraphQLArgument;
+import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 
@@ -43,6 +46,13 @@ public class MServiceApiV1 extends MService implements MConst {
 		list.add(t);
 		
 		return list;
+	}
+	
+	@GraphQLMutation(name = "IMPRIMIR_SENHA")
+	public Status printPass(
+			@GraphQLArgument(name = "cd_estacao") String stationId,
+			@GraphQLArgument(name = "nr_senha") String passNumber) {
+		return Status.to("OK", 0);
 	}
 	
 	
